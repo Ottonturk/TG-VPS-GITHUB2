@@ -31,16 +31,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: |
+      - name: Install dependencies and run Pytest
+        run: |
+          if [ -f "backend/package.json" ]; then
+            cd backend && npm install && cd ..
+          fi
           python -m pip install --upgrade pip
           pip install pytest
-          for req in backend/requirements.txt bot/requirements.txt; do
+          for req in requirements.txt backend/requirements.txt bot/requirements.txt; do
             if [ -f "$req" ]; then pip install -r "$req"; fi
           done
           pytest || [ $? -eq 5 ]
+
 
   deploy:
     name: Build Images & Deploy to VPS
