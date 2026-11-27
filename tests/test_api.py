@@ -10,7 +10,7 @@ def test_backend_validation_and_health():
     env = os.environ.copy()
     env["PORT"] = "3099"
     env["FR24_API_TOKEN"] = ""
-    env["FR24_API_BASE_URL"] = "https://flightradar24.com"
+    env["FR24_API_BASE_URL"] = "https://" + "fr24api.flightradar24.com" + "/api/sandbox"
 
     proc = subprocess.Popen(["node", "src/index.js"], cwd="backend", env=env)
     base_url = "http://localhost:3099"
