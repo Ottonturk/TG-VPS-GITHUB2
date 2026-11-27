@@ -1,17 +1,16 @@
-#def test_placeholder_backend():
-#   assert 1 + 1 == 2
+import json
 import os
 import subprocess
 import time
-import urllib.request
 import urllib.error
-import json
+import urllib.request
 
 
 def test_backend_validation_and_health():
     env = os.environ.copy()
     env["PORT"] = "3099"
     env["FR24_API_TOKEN"] = ""
+    env["FR24_API_BASE_URL"] = "https://flightradar24.com"
 
     proc = subprocess.Popen(["node", "src/index.js"], cwd="backend", env=env)
     base_url = "http://localhost:3099"
