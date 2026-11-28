@@ -10,7 +10,7 @@ app.get('/api/health', (req, res) => {
   res.json({
     status: 'ok',
     service: 'backend',
-    fr24Mode: config.fr24.baseUrl.includes('/sandbox') ? 'sandbox' : 'production',
+    fr24Configured: Boolean(config.fr24.token && config.fr24.token !== 'your_fr24_token_here'),
     timestamp: new Date().toISOString()
   });
 });

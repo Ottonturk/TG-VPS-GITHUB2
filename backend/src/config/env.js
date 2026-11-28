@@ -1,4 +1,4 @@
-const DEFAULT_FR24_URL = 'https://' + '://flightradar24.com' + '/api/sandbox';
+const DEFAULT_FR24_URL = 'https://' + 'fr24api.flightradar24.com' + '/api';
 
 export const config = {
   port: Number(process.env.PORT) || 3000,
