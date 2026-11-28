@@ -10,7 +10,7 @@ def test_backend_validation_and_health():
     env = os.environ.copy()
     env["PORT"] = "3099"
     env["FR24_API_TOKEN"] = ""
-    env["FR24_API_BASE_URL"] = "https://" + "fr24api.flightradar24.com" + "/api/sandbox"
+    env["FR24_API_BASE_URL"] = "https://" + "://flightradar24.com" + "/api"
 
     proc = subprocess.Popen(["node", "src/index.js"], cwd="backend", env=env)
     base_url = "http://localhost:3099"
@@ -22,7 +22,7 @@ def test_backend_validation_and_health():
             assert resp.status == 200
             body = json.loads(resp.read().decode())
             assert body["status"] == "ok"
-            assert body["fr24Mode"] == "sandbox"
+            assert body["fr24Configured"] is False
 
         # 2. Проверяем валидацию параметров на /api/v1/flights/live (без фильтров -> 400)
         try:

@@ -13,14 +13,14 @@ if (!token || token === 'your_token_here') {
     try {
       const health = await backendClient.getHealth();
       await ctx.reply(
-        `Бот на связи!\nСтатус бэкенда: ${health.status}\nРежим FR24: ${health.fr24Mode}`
+        `Бот на связи!\nСтатус бэкенда: ${health.status}\nТокен FR24 настроен: ${health.fr24Configured ? 'да' : 'нет'}`
       );
     } catch {
       await ctx.reply('Бот работает, но бэкенд пока недоступен.');
     }
   });
 
-  // Тестовая команда для проверки интеграции с Flightradar24 Sandbox (например: /airport WAW)
+  // Тестовая команда для проверки интеграции с Flightradar24 API (например: /airport WAW)
   bot.command('airport', async (ctx) => {
     const code = ctx.match?.trim();
     if (!code) {
