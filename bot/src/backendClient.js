@@ -15,8 +15,20 @@ async function fetchBackend(path) {
 export const backendClient = {
   getHealth: () => fetchBackend('/api/health'),
   getAirport: (code) => fetchBackend(`/api/v1/flights/airports/${encodeURIComponent(code)}`),
+  getAirportFull: (code) => fetchBackend(`/api/v1/flights/airports/${encodeURIComponent(code)}/full`),
+  getAirline: (icao) => fetchBackend(`/api/v1/flights/airlines/${encodeURIComponent(icao)}`),
   getLiveFlights: (queryParams) => {
     const qs = new URLSearchParams(queryParams).toString();
     return fetchBackend(`/api/v1/flights/live?${qs}`);
-  }
+  },
+  getLiveCount: (queryParams) => {
+    const qs = new URLSearchParams(queryParams).toString();
+    return fetchBackend(`/api/v1/flights/live/count?${qs}`);
+  },
+  getFlightSummary: (queryParams) => {
+    const qs = new URLSearchParams(queryParams).toString();
+    return fetchBackend(`/api/v1/flights/summary?${qs}`);
+  },
+  getFlightTrack: (flightId) => fetchBackend(`/api/v1/flights/tracks/${encodeURIComponent(flightId)}`),
+  getUsage: (period = '24h') => fetchBackend(`/api/v1/flights/usage?period=${encodeURIComponent(period)}`)
 };

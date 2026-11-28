@@ -17,7 +17,7 @@ export class Fr24Client {
   }
 
   async request(endpoint, queryParams = {}) {
-    if (!this.token || this.token === 'your_fr24_sandbox_token_here') {
+    if (!this.token || this.token === 'your_fr24_token_here') {
       throw new Fr24ApiError(503, 'FR24_API_TOKEN is not configured');
     }
 
@@ -66,7 +66,7 @@ export class Fr24Client {
     }
   }
 
-  // Методы согласно OpenAPI спецификации:
+  // 1. Static: Airports & Airlines
   getAirportLight(code) {
     return this.request(`/static/airports/${encodeURIComponent(code.toUpperCase())}/light`);
   }
@@ -79,16 +79,38 @@ export class Fr24Client {
     return this.request(`/static/airlines/${encodeURIComponent(icao.toUpperCase())}/light`);
   }
 
+  // 2. Live Flight Positions
   getLivePositionsLight(params) {
-    // params: { bounds, flights, callsigns, registrations, airports, routes, limit }
     return this.request('/live/flight-positions/light', params);
   }
 
+  getLivePositionsFull(params) {
+    return this.request('/live/flight-positions/full', params);
+  }
+
+  getLivePositionsCount(params) {
+    return this.request('/live/flight-positions/count', params);
+  }
+
+  // 3. Flight Summary & Tracks
   getFlightSummaryLight(params) {
-    // params: { flight_ids, flights, flight_datetime_from, flight_datetime_to, limit }
     return this.request('/flight-summary/light', params);
   }
 
+  getFlightSummaryFull(params) {
+    return this.request('/flight-summary/full', params);
+  }
+
+  getFlightTracks(flightId) {
+    return this.request('/flight-tracks', { flight_id: flightId });
+  }
+
+  // 4. Historic Flight Events
+  getHistoricEventsLight(params) {
+    return this.request('/historic/flight-events/light', params);
+  }
+
+  // 5. Account Usage
   getUsage(period = '24h') {
     return this.request('/usage', { period });
   }
